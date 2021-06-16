@@ -1,13 +1,18 @@
 package com.educandoweb.course.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tb_user")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -20,6 +25,9 @@ public class User implements Serializable {
 	private String password;
 	private String phone;
 	
+	@OneToMany(mappedBy = "client")
+	private List<Order> orders = new ArrayList<>();
+	
 	public User() {}
 
 	public User(Long id, String name, String email,String phone, String password) {
@@ -27,7 +35,7 @@ public class User implements Serializable {
 		this.id = id;
 		this.name = name;
 		this.email = email;
-		this.phone = phone;
+		this.setPhone(phone);
 		this.password = password;
 	}
 
@@ -62,6 +70,18 @@ public class User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	
+	public List<Order> getOrders() {
+		return orders;
+	}
 
 	@Override
 	public int hashCode() {
@@ -87,6 +107,5 @@ public class User implements Serializable {
 			return false;
 		return true;
 	}
-	
 	
 }
